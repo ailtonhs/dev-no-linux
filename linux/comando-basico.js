@@ -1,5 +1,8 @@
 //Navegando pelo sistema - Comando básicos Linux em formato JS
 
+// ============================
+// 🚀 ACESSO REMOTO
+// ============================
 // Instalação do servidor SSH para acesso remoto
 const recursoAcessoRemoto = 'sudo apt-get install openssh-server';
 
@@ -7,7 +10,9 @@ const recursoAcessoRemoto = 'sudo apt-get install openssh-server';
 const acessoRemoto = 'ssh usuario@192.168.0.108';
 
 
-// Comandos úteis do terminal
+// ============================
+// 🔧 COMANDOS ÚTEIS
+// ============================
 
 const exibirDataHora = 'date'; // Mostra data e hora
 
@@ -24,8 +29,12 @@ const limpaTerminal = 'clear'; // Limpa a tela
 
 const caminhoAtual = 'pwd';  // Mostra onde estou no sistema
 
+const forcarExclusao = 'rm -rf Planilhas'; //Força a exclusão de arquivos e diretório (mesmo se não estiverem vazios)
 
-// Navegação entre diretórios
+
+// ============================
+// 📂 NAVEGAÇÃO ENTRE DIRETÓRIOS
+// ============================
 
 const raiz = 'cd /';  // Vai para o diretório raiz
 
@@ -49,11 +58,17 @@ const caminhoDireto = 'cd storage/Documentos';  // Caminho direto até o destino
 const dicaTab = 'cd storage/'; // Depois de digitar isso, pressione TAB 2x para ver o que há dentro
 
 
+// ============================
+// ✅ FUNÇÃO PARA EXIBIR
+// ============================
 const mostrarComando = (comando, descricao) => {
     return `${comando}: \n→ ${descricao}\n`;
 }
 
-// Mostrar todos os comandos na tela
+// ============================
+// 📤 EXIBINDO OS COMANDOS
+// ============================
+console.log(mostrarComando(forcarExclusao, 'Força a exclusão de arquivos e diretório (mesmo se não estiverem vazios)'));
 console.log(mostrarComando(recursoAcessoRemoto, 'Instala o servidor SSH'));
 console.log(mostrarComando(acessoRemoto, 'Acesso de Linux para outro via SSH'));
 console.log(mostrarComando(exibirDataHora, 'Mostra data e hora'));
