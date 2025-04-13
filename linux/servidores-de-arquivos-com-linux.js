@@ -1,47 +1,76 @@
-//Servidores de Arquivos com Linux
-
-//----------------------------------------
-//Introdução ao servidor de arquivos
-//----------------------------------------
+//==================================================
+// Servidor de Arquivos com Linux e SAMBA
+//==================================================
 
 
+/*
+O que é um Servidor de Arquivos?
 
-//-------------------------------------------
-//Instalação do SAMBA e configuração inicial
-//--------------------------------------------
+Um servidor de arquivos é um computador configurado para armazenar,
+gerenciar e disponibilizar arquivos para outros dispositivos em uma rede.
 
-const comandoInstalarSamba = 'apt install samba -y';
+Ele permite que usuários acessem, compartilhem e editem arquivos de forma centralizada,
+evitando a necessidade de duplicar os dados em cada máquina.
 
-const comandoParaCriarPastaNoDisco2 = 'mkdir publica';
+No Linux, é comum usar o SAMBA para transformar o sistema em um servidor de arquivos,
+compatível com máquinas Windows, permitindo o compartilhamento de pastas pela rede
+de forma simples e segura.
+*/
 
-const comandoParaDaPermissaoTotal = 'chmod 777 publica/';
+//----------------------------------------------------
+// Instalação do SAMBA e Configuração Inicial
+//----------------------------------------------------
 
-const comandoParaLiberarPastaParaRede = 'nano /etc/samba/smb.conf';
+// Instala o pacote SAMBA no sistema com confirmação automática (-y)
+const instalarSamba = 'apt install samba -y';
 
-//Edição no smb.conf
+// Cria a pasta "publica" no diretório atual (idealmente dentro de /disk2, por exemplo)
+const criarDiretorioPublico = 'mkdir publica';
 
-//[publica] -> nome de compatilhamento
-//path = /disk2/publica -> indicar o caminho
-//writable = yes -> pasta liberada para gravação
-//guest ok = yes -> qualquer pessoa pode acessala
-//guest only = yes -> diz que toda pessoa é convidado
+// Define permissões completas de leitura, escrita e execução para todos os usuários na pasta "publica"
+const permissaoTotalParaPublica = 'chmod 777 publica/';
 
-const comandoParaReiniciarSamba = 'systemctl restart smbd';
+// Abre o arquivo de configuração do SAMBA para edição
+const editarConfiguracaoSamba = 'nano /etc/samba/smb.conf';
 
-const comandoParaVerificarseEstaFuncionado = 'systemctl status smbd';
+/*
+Trecho a ser adicionado no final do arquivo smb.conf:
 
-const comandoParaAtivarOSambaAutomatico = 'systemctl enable smbd';
+[publica]              # Nome do compartilhamento
+path = /disk2/publica  # Caminho absoluto da pasta que será compartilhada
+writable = yes         # Permite gravação (escrita) na pasta
+guest ok = yes         # Permite acesso sem autenticação
+guest only = yes       # Apenas usuários convidados terão acesso
+*/
 
+// Reinicia o serviço do SAMBA para aplicar as novas configurações
+const reiniciarServicoSamba = 'systemctl restart smbd';
 
-//------------------------------------------------------------
-//Configurando o acesso via máquina cliente
+// Verifica o status atual do serviço SAMBA
+const verificarStatusSamba = 'systemctl status smbd';
+
+// Ativa o SAMBA para iniciar automaticamente junto com o sistema
+const ativarSambaAoInicializar = 'systemctl enable smbd';
+
+//----------------------------------------------------------
+// Configurando o Acesso pela Máquina Cliente (Windows)
 //----------------------------------------------------------
 
-//Caminho de rede Windows
-//Abrir o explorador de Arquivo e digira na aba \\192.168.122\publica e enter, vai abrir uma janela de credenciais para usuaário cadastrado
+/*
+Acesso direto via explorador de arquivos:
 
+1. Abra o Explorador de Arquivos no Windows.
+2. Digite na barra de endereços: \\192.168.122.252\publica
+3. Pressione Enter.
+4. Uma janela pedirá credenciais se o acesso não for como convidado.
 
-//facilitando para usuario no windows
-//caminho de rede
-//-> este computador -> mostrar mais opções -> mapear unidade de rede -> irá abir uma janela onde você deve colcar uma letra e o caminho da pasta -> \\192.168.122.252\publica
+Mapeando a pasta como unidade de rede:
+
+1. Vá em "Este Computador".
+2. Clique com o botão direito e escolha "Mostrar mais opções" > "Mapear unidade de rede".
+3. Escolha uma letra para a unidade.
+4. Informe o caminho da pasta: \\192.168.122.252\publica
+5. Conclua o mapeamento.
+*/
+
 
